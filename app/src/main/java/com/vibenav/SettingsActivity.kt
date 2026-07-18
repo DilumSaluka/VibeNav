@@ -1,6 +1,7 @@
 package com.vibenav
 
 import android.Manifest
+import android.app.AlertDialog
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
@@ -87,6 +88,44 @@ class SettingsActivity : AppCompatActivity() {
             val intent = Intent(this, TutorialActivity::class.java)
             intent.putExtra("fromSettings", true)
             startActivity(intent)
+        }
+
+        findViewById<MaterialButton>(R.id.checkUpdateButton).setOnClickListener {
+            checkForUpdates()
+        }
+    }
+
+    private fun checkForUpdates() {
+        val updateManager = UpdateManager(this)
+        val btn = findViewById<MaterialButton>(R.id.checkUpdateButton)
+        btn.isEnabled = false
+        btn.text = "⏳ Checking..."
+
+        updateManager.checkForUpdate { info ->
+            runOnUiThread {
+                btn.isEnabled = true
+                btn.text = "🔍 Check for Updates"
+
+                if (info == null) {
+                    Toast.makeText(this, "Failed to check for updates. Check your internet connection.", Toast.LENGTH_LONG).show()
+                    return@runOnUiThread
+                }
+
+                if (!updateManager.needsUpdate(info.latestVersion)) {
+                    Toast.makeText(this, "✅ You're up to date (v${info.latestVersion})", Toast.LENGTH_LONG).show()
+                    return@runOnUiThread
+                }
+
+                AlertDialog.Builder(this).apply {
+                    setTitle("📲 Update Available")
+                    setMessage("Version ${info.tagName} is available.\n\nCurrent: v${updateManager.currentVersion}\n\n${info.releaseNotes.take(300)}")
+                    setPositiveButton("Download & Install") { _, _ ->
+                        updateManager.downloadAndInstall(info.apkUrl, info.tagName)
+                    }
+                    setNegativeButton("Later", null)
+                    show()
+                }
+            }
         }
     }
 
