@@ -16,7 +16,7 @@ import java.net.URL
 class UpdateManager(private val context: Context) {
 
     private val apiUrl = "https://api.github.com/repos/DilumSaluka/VibeNav/releases/latest"
-    private val currentVersion: String
+    val currentVersion: String
         get() {
             return try {
                 context.packageManager.getPackageInfo(context.packageName, 0).versionName
