@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">VibeNav</string>
+    <string name="search_hint">Search destination...</string>
+    <string name="start_tracking">Start Tracking</string>
+    <string name="stop_tracking">Stop Tracking</string>
+    <string name="distance_remaining">Distance: %1$s</string>
+    <string name="alert_title">Destination Reached!</string>
+    <string name="alert_message">You are within range of your destination</string>
+    <string name="dismiss">Dismiss</string>
+    <string name="notification_channel">VibeNav Tracking</string>
+    <string name="notification_text">Tracking location to destination</string>
+    <string name="permission_location">Location permission is needed to track your position</string>
+    <string name="permission_notification">Notification permission is needed for background tracking</string>
+    <string name="proximity_meters">%1$d m</string>
+    <string name="arrived">Arrived!</string>
+    <string name="save_place">Save Place</string>
+    <string name="saved_places">Saved Places</string>
+    <string name="radius_label">Alert Radius: %1$d m</string>
+    <string name="auto_stop">Auto-stop after arrival</string>
+    <string name="no_saved_places">No saved places yet</string>
+</resources>

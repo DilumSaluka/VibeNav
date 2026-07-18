@@ -1,0 +1,387 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/background">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="20dp">
+
+        <TextView
+            android:id="@+id/helpTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="VibeNav Guide"
+            android:textColor="@color/on_surface"
+            android:textSize="26sp"
+            android:textStyle="bold"
+            android:layout_marginTop="16dp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Your personal navigation alert app"
+            android:textColor="#88FFFFFF"
+            android:textSize="14sp"
+            android:layout_marginTop="4dp" />
+
+        <!-- What is VibeNav -->
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="\n📱 What is VibeNav?"
+            android:textColor="@color/accent_blue"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:layout_marginTop="24dp" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="#33FFFFFF"
+            android:layout_marginTop="8dp" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="VibeNav helps you reach any destination without constantly looking at your phone. Set a pin on the map, start tracking, and the phone will vibrate, beep, and speak when you're getting close — so you can keep your eyes on the road, not the screen."
+            android:textColor="@color/on_surface"
+            android:textSize="14sp"
+            android:lineSpacingExtra="4dp"
+            android:layout_marginTop="8dp" />
+
+        <!-- Icons & Buttons -->
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="\n🔘 What Each Button Does"
+            android:textColor="@color/accent_blue"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:layout_marginTop="24dp" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="#33FFFFFF"
+            android:layout_marginTop="8dp" />
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:padding="12dp"
+            android:background="@color/surface">
+            <TextView android:id="@+id/hIcon1" android:layout_width="40dp" android:layout_height="40dp" android:gravity="center" android:textSize="22sp" android:text="🔍" app:layout_constraintStart_toStartOf="parent" app:layout_constraintTop_toTopOf="parent" app:layout_constraintBottom_toBottomOf="parent" />
+            <TextView android:id="@+id/hName1" android:layout_width="0dp" android:layout_height="wrap_content" android:textSize="15sp" android:textStyle="bold" android:textColor="@color/on_surface" android:layout_marginStart="12dp" android:text="Search Bar" app:layout_constraintStart_toEndOf="@id/hIcon1" app:layout_constraintEnd_toEndOf="parent" app:layout_constraintTop_toTopOf="parent" />
+            <TextView android:id="@+id/hDesc1" android:layout_width="0dp" android:layout_height="wrap_content" android:textSize="13sp" android:textColor="#AAFFFFFF" android:layout_marginTop="2dp" android:layout_marginStart="12dp" android:text="Type any place name and tap the search key. The map will fly there and drop a red pin." app:layout_constraintStart_toEndOf="@id/hIcon1" app:layout_constraintEnd_toEndOf="parent" app:layout_constraintTop_toBottomOf="@id/hName1" app:layout_constraintBottom_toBottomOf="parent" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:padding="12dp"
+            android:background="@color/surface">
+            <TextView android:id="@+id/hIcon2" android:layout_width="40dp" android:layout_height="40dp" android:gravity="center" android:textSize="22sp" android:text="🌤" app:layout_constraintStart_toStartOf="parent" app:layout_constraintTop_toTopOf="parent" app:layout_constraintBottom_toBottomOf="parent" />
+            <TextView android:id="@+id/hName2" android:layout_width="0dp" android:layout_height="wrap_content" android:textSize="15sp" android:textStyle="bold" android:textColor="@color/on_surface" android:layout_marginStart="12dp" android:text="Live Weather" app:layout_constraintStart_toEndOf="@id/hIcon2" app:layout_constraintEnd_toEndOf="parent" app:layout_constraintTop_toTopOf="parent" />
+            <TextView android:id="@+id/hDesc2" android:layout_width="0dp" android:layout_height="wrap_content" android:textSize="13sp" android:textColor="#AAFFFFFF" android:layout_marginTop="2dp" android:layout_marginStart="12dp" android:text="Shows current temperature and weather condition for your area. Updates when you open the app." app:layout_constraintStart_toEndOf="@id/hIcon2" app:layout_constraintEnd_toEndOf="parent" app:layout_constraintTop_toBottomOf="@id/hName2" app:layout_constraintBottom_toBottomOf="parent" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:padding="12dp"
+            android:background="@color/surface">
+            <TextView android:id="@+id/hIcon3" android:layout_width="40dp" android:layout_height="40dp" android:gravity="center" android:textSize="22sp" android:text="⚙" app:layout_constraintStart_toStartOf="parent" app:layout_constraintTop_toTopOf="parent" app:layout_constraintBottom_toBottomOf="parent" />
+            <TextView android:id="@+id/hName3" android:layout_width="0dp" android:layout_height="wrap_content" android:textSize="15sp" android:textStyle="bold" android:textColor="@color/on_surface" android:layout_marginStart="12dp" android:text="Settings Gear" app:layout_constraintStart_toEndOf="@id/hIcon3" app:layout_constraintEnd_toEndOf="parent" app:layout_constraintTop_toTopOf="parent" />
+            <TextView android:id="@+id/hDesc3" android:layout_width="0dp" android:layout_height="wrap_content" android:textSize="13sp" android:textColor="#AAFFFFFF" android:layout_marginTop="2dp" android:layout_marginStart="12dp" android:text="Opens Settings where you can adjust alert radius, manage permissions, view saved places and trip history. Long-press for tutorial." app:layout_constraintStart_toEndOf="@id/hIcon3" app:layout_constraintEnd_toEndOf="parent" app:layout_constraintTop_toBottomOf="@id/hName3" app:layout_constraintBottom_toBottomOf="parent" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:padding="12dp"
+            android:background="@color/surface">
+            <TextView android:id="@+id/hIcon4" android:layout_width="40dp" android:layout_height="40dp" android:gravity="center" android:textSize="22sp" android:text="🛰" app:layout_constraintStart_toStartOf="parent" app:layout_constraintTop_toTopOf="parent" app:layout_constraintBottom_toBottomOf="parent" />
+            <TextView android:id="@+id/hName4" android:layout_width="0dp" android:layout_height="wrap_content" android:textSize="15sp" android:textStyle="bold" android:textColor="@color/on_surface" android:layout_marginStart="12dp" android:text="Satellite / Map Toggle" app:layout_constraintStart_toEndOf="@id/hIcon4" app:layout_constraintEnd_toEndOf="parent" app:layout_constraintTop_toTopOf="parent" />
+            <TextView android:id="@+id/hDesc4" android:layout_width="0dp" android:layout_height="wrap_content" android:textSize="13sp" android:textColor="#AAFFFFFF" android:layout_marginTop="2dp" android:layout_marginStart="12dp" android:text="Switches between normal street map and satellite view. 🛰 = satellite, 🗺 = street map." app:layout_constraintStart_toEndOf="@id/hIcon4" app:layout_constraintEnd_toEndOf="parent" app:layout_constraintTop_toBottomOf="@id/hName4" app:layout_constraintBottom_toBottomOf="parent" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:padding="12dp"
+            android:background="@color/surface">
+            <TextView android:id="@+id/hIcon5" android:layout_width="40dp" android:layout_height="40dp" android:gravity="center" android:textSize="22sp" android:text="📍" app:layout_constraintStart_toStartOf="parent" app:layout_constraintTop_toTopOf="parent" app:layout_constraintBottom_toBottomOf="parent" />
+            <TextView android:id="@+id/hName5" android:layout_width="0dp" android:layout_height="wrap_content" android:textSize="15sp" android:textStyle="bold" android:textColor="@color/on_surface" android:layout_marginStart="12dp" android:text="My Location Button" app:layout_constraintStart_toEndOf="@id/hIcon5" app:layout_constraintEnd_toEndOf="parent" app:layout_constraintTop_toTopOf="parent" />
+            <TextView android:id="@+id/hDesc5" android:layout_width="0dp" android:layout_height="wrap_content" android:textSize="13sp" android:textColor="#AAFFFFFF" android:layout_marginTop="2dp" android:layout_marginStart="12dp" android:text="Floating blue circle at bottom-right. Tap to center the map on your current location." app:layout_constraintStart_toEndOf="@id/hIcon5" app:layout_constraintEnd_toEndOf="parent" app:layout_constraintTop_toBottomOf="@id/hName5" app:layout_constraintBottom_toBottomOf="parent" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:padding="12dp"
+            android:background="@color/surface">
+            <TextView android:id="@+id/hIcon6" android:layout_width="40dp" android:layout_height="40dp" android:gravity="center" android:textSize="22sp" android:text="📌" app:layout_constraintStart_toStartOf="parent" app:layout_constraintTop_toTopOf="parent" app:layout_constraintBottom_toBottomOf="parent" />
+            <TextView android:id="@+id/hName6" android:layout_width="0dp" android:layout_height="wrap_content" android:textSize="15sp" android:textStyle="bold" android:textColor="@color/on_surface" android:layout_marginStart="12dp" android:text="Pin a Destination" app:layout_constraintStart_toEndOf="@id/hIcon6" app:layout_constraintEnd_toEndOf="parent" app:layout_constraintTop_toTopOf="parent" />
+            <TextView android:id="@+id/hDesc6" android:layout_width="0dp" android:layout_height="wrap_content" android:textSize="13sp" android:textColor="#AAFFFFFF" android:layout_marginTop="2dp" android:layout_marginStart="12dp" android:text="Long-press (hold finger) on any spot on the map to place a red pin. A green circle shows the alert zone around it." app:layout_constraintStart_toEndOf="@id/hIcon6" app:layout_constraintEnd_toEndOf="parent" app:layout_constraintTop_toBottomOf="@id/hName6" app:layout_constraintBottom_toBottomOf="parent" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:padding="12dp"
+            android:background="@color/surface">
+            <TextView android:id="@+id/hIcon7" android:layout_width="40dp" android:layout_height="40dp" android:gravity="center" android:textSize="22sp" android:text="⭐" app:layout_constraintStart_toStartOf="parent" app:layout_constraintTop_toTopOf="parent" app:layout_constraintBottom_toBottomOf="parent" />
+            <TextView android:id="@+id/hName7" android:layout_width="0dp" android:layout_height="wrap_content" android:textSize="15sp" android:textStyle="bold" android:textColor="@color/on_surface" android:layout_marginStart="12dp" android:text="Save Place" app:layout_constraintStart_toEndOf="@id/hIcon7" app:layout_constraintEnd_toEndOf="parent" app:layout_constraintTop_toTopOf="parent" />
+            <TextView android:id="@+id/hDesc7" android:layout_width="0dp" android:layout_height="wrap_content" android:textSize="13sp" android:textColor="#AAFFFFFF" android:layout_marginTop="2dp" android:layout_marginStart="12dp" android:text="Saves the pinned destination so you can load it from Settings → Saved Places anytime." app:layout_constraintStart_toEndOf="@id/hIcon7" app:layout_constraintEnd_toEndOf="parent" app:layout_constraintTop_toBottomOf="@id/hName7" app:layout_constraintBottom_toBottomOf="parent" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:padding="12dp"
+            android:background="@color/surface">
+            <TextView android:id="@+id/hIcon8" android:layout_width="40dp" android:layout_height="40dp" android:gravity="center" android:textSize="22sp" android:text="📤" app:layout_constraintStart_toStartOf="parent" app:layout_constraintTop_toTopOf="parent" app:layout_constraintBottom_toBottomOf="parent" />
+            <TextView android:id="@+id/hName8" android:layout_width="0dp" android:layout_height="wrap_content" android:textSize="15sp" android:textStyle="bold" android:textColor="@color/on_surface" android:layout_marginStart="12dp" android:text="Share" app:layout_constraintStart_toEndOf="@id/hIcon8" app:layout_constraintEnd_toEndOf="parent" app:layout_constraintTop_toTopOf="parent" />
+            <TextView android:id="@+id/hDesc8" android:layout_width="0dp" android:layout_height="wrap_content" android:textSize="13sp" android:textColor="#AAFFFFFF" android:layout_marginTop="2dp" android:layout_marginStart="12dp" android:text="Shares the destination location link via WhatsApp, SMS, or any app — so friends/family know where you're headed." app:layout_constraintStart_toEndOf="@id/hIcon8" app:layout_constraintEnd_toEndOf="parent" app:layout_constraintTop_toBottomOf="@id/hName8" app:layout_constraintBottom_toBottomOf="parent" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:padding="12dp"
+            android:background="@color/surface">
+            <TextView android:id="@+id/hIcon9" android:layout_width="40dp" android:layout_height="40dp" android:gravity="center" android:textSize="22sp" android:text="🚀" app:layout_constraintStart_toStartOf="parent" app:layout_constraintTop_toTopOf="parent" app:layout_constraintBottom_toBottomOf="parent" />
+            <TextView android:id="@+id/hName9" android:layout_width="0dp" android:layout_height="wrap_content" android:textSize="15sp" android:textStyle="bold" android:textColor="@color/on_surface" android:layout_marginStart="12dp" android:text="Start Tracking" app:layout_constraintStart_toEndOf="@id/hIcon9" app:layout_constraintEnd_toEndOf="parent" app:layout_constraintTop_toTopOf="parent" />
+            <TextView android:id="@+id/hDesc9" android:layout_width="0dp" android:layout_height="wrap_content" android:textSize="13sp" android:textColor="#AAFFFFFF" android:layout_marginTop="2dp" android:layout_marginStart="12dp" android:text="Big button at the bottom. Tap to begin navigating — the phone will vibrate, beep, and speak when you approach. Shows live distance, speed, ETA, and your current street name. Tap again (now red) to stop." app:layout_constraintStart_toEndOf="@id/hIcon9" app:layout_constraintEnd_toEndOf="parent" app:layout_constraintTop_toBottomOf="@id/hName9" app:layout_constraintBottom_toBottomOf="parent" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:padding="12dp"
+            android:background="@color/surface">
+            <TextView android:id="@+id/hIcon10" android:layout_width="40dp" android:layout_height="40dp" android:gravity="center" android:textSize="22sp" android:text="✕" app:layout_constraintStart_toStartOf="parent" app:layout_constraintTop_toTopOf="parent" app:layout_constraintBottom_toBottomOf="parent" />
+            <TextView android:id="@+id/hName10" android:layout_width="0dp" android:layout_height="wrap_content" android:textSize="15sp" android:textStyle="bold" android:textColor="@color/on_surface" android:layout_marginStart="12dp" android:text="Remove Pin (✕)" app:layout_constraintStart_toEndOf="@id/hIcon10" app:layout_constraintEnd_toEndOf="parent" app:layout_constraintTop_toTopOf="parent" />
+            <TextView android:id="@+id/hDesc10" android:layout_width="0dp" android:layout_height="wrap_content" android:textSize="13sp" android:textColor="#AAFFFFFF" android:layout_marginTop="2dp" android:layout_marginStart="12dp" android:text="Red X button next to the destination name. Clears the pin and alert zone from the map." app:layout_constraintStart_toEndOf="@id/hIcon10" app:layout_constraintEnd_toEndOf="parent" app:layout_constraintTop_toBottomOf="@id/hName10" app:layout_constraintBottom_toBottomOf="parent" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <!-- Step by Step -->
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="\n👣 Step-by-Step: How to Use"
+            android:textColor="@color/accent_blue"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:layout_marginTop="24dp" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="#33FFFFFF"
+            android:layout_marginTop="8dp" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_marginTop="12dp">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Step 1: Set a Destination"
+                android:textColor="@color/accent_blue"
+                android:textSize="16sp"
+                android:textStyle="bold" />
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="🔍 Search: Type a place name in the search bar at the top, then tap the keyboard search key — the map will fly to that location and place a red pin.\n\n👆 Long-press: Hold your finger down on any spot on the map for 1 second — a pin will drop at that exact spot.\n\nOnce a pin is placed, you'll see a green circle around it (your alert zone) and the destination name at the bottom."
+                android:textColor="@color/on_surface"
+                android:textSize="14sp"
+                android:lineSpacingExtra="4dp"
+                android:layout_marginTop="4dp" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="#33FFFFFF"
+                android:layout_marginVertical="16dp" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Step 2: (Optional) Save or Share"
+                android:textColor="@color/accent_blue"
+                android:textSize="16sp"
+                android:textStyle="bold" />
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="⭐ Save Place: Tap to save this destination — you can load it later from Settings → Saved Places.\n\n📤 Share: Tap to send the location link via WhatsApp, SMS, email, or any app — so someone knows where you're going."
+                android:textColor="@color/on_surface"
+                android:textSize="14sp"
+                android:lineSpacingExtra="4dp"
+                android:layout_marginTop="4dp" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="#33FFFFFF"
+                android:layout_marginVertical="16dp" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Step 3: Start Tracking"
+                android:textColor="@color/accent_blue"
+                android:textSize="16sp"
+                android:textStyle="bold" />
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Tap the big 'Start Tracking' button at the bottom.
+
+• The app will go into tracking mode
+• A notification appears showing your distance to the destination
+• The bottom panel shows:
+    - Distance remaining
+    - Estimated time to arrival
+    - Your current speed
+    - Your current street name
+• A blue arrow on the map points toward your destination"
+                android:textColor="@color/on_surface"
+                android:textSize="14sp"
+                android:lineSpacingExtra="4dp"
+                android:layout_marginTop="4dp" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="#33FFFFFF"
+                android:layout_marginVertical="16dp" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Step 4: When You Arrive"
+                android:textColor="@color/accent_blue"
+                android:textSize="16sp"
+                android:textStyle="bold" />
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="When you enter the green alert zone around your destination:
+
+📳 Phone vibrates strongly (pulsing pattern)
+🔊 Loud beep sound plays
+🗣 Voice says 'You have arrived'
+📱 Full-screen alert pops up with 'Silence Alarm' or 'Stop Mission'
+
+🔔 If the phone is locked or screen is off, a high-priority notification appears. Swipe or tap to open the full alert.
+
+⏱ After 60 seconds inside the zone, tracking stops automatically and the trip is saved to History."
+                android:textColor="@color/on_surface"
+                android:textSize="14sp"
+                android:lineSpacingExtra="4dp"
+                android:layout_marginTop="4dp" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="#33FFFFFF"
+                android:layout_marginVertical="16dp" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Step 5: Stop or Silence"
+                android:textColor="@color/accent_blue"
+                android:textSize="16sp"
+                android:textStyle="bold" />
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="• Tap 'Stop Tracking' (red button) anytime to end the session — the trip is saved automatically.\n\n• From the alert notification, tap 'Silence' to stop the noise while still tracking, or 'Stop' to end completely.\n\n• From the full-screen alert, choose 'Silence Alarm' or 'Stop Mission'."
+                android:textColor="@color/on_surface"
+                android:textSize="14sp"
+                android:lineSpacingExtra="4dp"
+                android:layout_marginTop="4dp" />
+
+        </LinearLayout>
+
+        <!-- Settings -->
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="\n⚙ Settings Explained"
+            android:textColor="@color/accent_blue"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:layout_marginTop="24dp" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="#33FFFFFF"
+            android:layout_marginTop="8dp" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="\n🔐 Permissions — Tap to re-request location if denied\n\n📏 Alert Radius — Drag the slider to set how close (50m–1000m) you must be before the alarm activates. Default is 300m.\n\n🔋 Disable Battery Optimization — Samsung phones may kill tracking when locked. Tap this to whitelist VibeNav.\n\n⭐ Saved Places — View all saved destinations. Tap to navigate, long-press to delete.\n\n📋 Trip History — Every tracking session is saved here with date, duration, and distance. Tap to go to that destination.\n\n🗑 Clear Cache — Delete stored map tiles to free storage space.\n\n📂 App Info — Open system settings for this app (clear data, force stop)."
+            android:textColor="@color/on_surface"
+            android:textSize="14sp"
+            android:lineSpacingExtra="4dp"
+            android:layout_marginTop="4dp" />
+
+        <!-- Safety -->
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="\n🛡 Safety Features"
+            android:textColor="@color/accent_blue"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:layout_marginTop="24dp" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="#33FFFFFF"
+            android:layout_marginTop="8dp" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="\n📍 Live Current Location — During tracking, your current street/area name is shown at the bottom. If a friend asks where you are, just read it out — no need to look for street signs or ask strangers.\n\n📤 Share Destination — Send your destination to family or friends so they know your route.\n\n📳 Hands-free Alerts — Vibration + voice + beep means you don't need to look at your phone while traveling."
+            android:textColor="@color/on_surface"
+            android:textSize="14sp"
+            android:lineSpacingExtra="4dp"
+            android:layout_marginTop="4dp" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="\n\n"
+            android:textSize="8sp" />
+
+    </LinearLayout>
+
+</ScrollView>

@@ -1,0 +1,277 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#FF1A1A2E">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/topBar"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:paddingTop="0dp"
+        android:paddingBottom="0dp"
+        android:translationY="-22dp"
+        android:paddingHorizontal="12dp"
+        android:background="#FF1A1A2E"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
+
+        <TextView
+            android:id="@+id/appTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/app_name"
+            android:textSize="26sp"
+            android:textColor="@android:color/white"
+            android:textStyle="bold|italic"
+            android:letterSpacing="0.08"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:layout_marginStart="4dp" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/settingsGearButton"
+            android:layout_width="44dp"
+            android:layout_height="44dp"
+            android:text="⚙"
+            android:textSize="20sp"
+            android:gravity="center"
+            android:contentDescription="Settings"
+            app:backgroundTint="#55FFFFFF"
+            app:cornerRadius="22dp"
+            android:padding="0dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:layout_marginEnd="4dp" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/helpButton"
+            android:layout_width="44dp"
+            android:layout_height="44dp"
+            android:text="?"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:gravity="center"
+            android:contentDescription="Help Guide"
+            app:backgroundTint="@color/alert_red"
+            android:textColor="@android:color/white"
+            app:cornerRadius="22dp"
+            android:padding="0dp"
+            android:layout_marginEnd="8dp"
+            app:layout_constraintEnd_toStartOf="@id/settingsGearButton"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent" />
+
+        <EditText
+            android:id="@+id/searchInput"
+            android:layout_width="0dp"
+            android:layout_height="44dp"
+            android:hint="@string/search_hint"
+            android:imeOptions="actionSearch"
+            android:singleLine="true"
+            android:paddingHorizontal="14dp"
+            android:background="@drawable/search_bg"
+            android:textColor="@android:color/white"
+            android:textColorHint="#AAFFFFFF"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/weatherText"
+            app:layout_constraintTop_toBottomOf="@id/helpButton"
+            android:layout_marginStart="4dp"
+            android:layout_marginTop="6dp" />
+
+        <TextView
+            android:id="@+id/weatherText"
+            android:layout_width="wrap_content"
+            android:layout_height="44dp"
+            android:gravity="center_vertical"
+            android:textSize="16sp"
+            android:textColor="@android:color/white"
+            android:textStyle="bold"
+            android:visibility="gone"
+            android:paddingHorizontal="10dp"
+            app:layout_constraintStart_toEndOf="@id/searchInput"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@id/searchInput"
+            app:layout_constraintBottom_toBottomOf="@id/searchInput" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <org.osmdroid.views.MapView
+        android:id="@+id/mapView"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintTop_toBottomOf="@id/topBar"
+        app:layout_constraintBottom_toTopOf="@id/bottomPanel"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/satToggleButton"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:text="🛰"
+        android:textSize="18sp"
+        android:gravity="center"
+        android:contentDescription="Toggle satellite view"
+        app:backgroundTint="#CC1A1A2E"
+        android:textColor="@android:color/white"
+        app:cornerRadius="24dp"
+        android:padding="0dp"
+        app:elevation="4dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@id/mapView"
+        android:layout_margin="12dp" />
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/locateMeFab"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@android:drawable/ic_menu_mylocation"
+        android:contentDescription="My Location"
+        android:tint="@color/on_primary"
+        app:backgroundTint="@color/primary"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="@id/mapView"
+        android:layout_margin="16dp"
+        android:layout_marginBottom="32dp" />
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/bottomPanel"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:padding="16dp"
+        android:background="#FF1A1A2E"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
+
+        <TextView
+            android:id="@+id/distanceText"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="@string/distance_remaining"
+            android:textColor="@android:color/white"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:textAlignment="center"
+            android:visibility="gone"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/currentLocationText"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:textColor="#FF64B5F6"
+            android:textSize="14sp"
+            android:textAlignment="center"
+            android:visibility="gone"
+            android:layout_marginTop="4dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/distanceText" />
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/destinationRow"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:visibility="gone"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/currentLocationText"
+            android:layout_marginTop="4dp"
+            android:paddingVertical="4dp">
+
+            <TextView
+                android:id="@+id/destinationLabel"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:textColor="@android:color/white"
+                android:textSize="15sp"
+                android:textAlignment="center"
+                android:textStyle="bold"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                android:layout_marginEnd="48dp" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/removePinButton"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:text="✕"
+                android:textSize="16sp"
+                android:gravity="center"
+                android:textColor="@android:color/white"
+                app:cornerRadius="20dp"
+                app:backgroundTint="@color/alert_red"
+                android:padding="0dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@id/destinationLabel"
+                app:layout_constraintBottom_toBottomOf="@id/destinationLabel" />
+
+            <LinearLayout
+                android:id="@+id/buttonRow"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:visibility="gone"
+                android:layout_marginTop="8dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/destinationLabel"
+                app:layout_constraintBottom_toBottomOf="parent">
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/savePlaceButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="40dp"
+                    android:text="Save"
+                    android:textSize="13sp"
+                    app:cornerRadius="20dp"
+                    app:backgroundTint="@color/accent_blue"
+                    android:visibility="gone"
+                    android:paddingHorizontal="16dp" />
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/shareButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="40dp"
+                    android:text="Share"
+                    android:textSize="13sp"
+                    app:cornerRadius="20dp"
+                    app:backgroundTint="@color/primary"
+                    android:visibility="gone"
+                    android:paddingHorizontal="16dp"
+                    android:layout_marginStart="12dp" />
+
+            </LinearLayout>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/trackingButton"
+            android:layout_width="0dp"
+            android:layout_height="56dp"
+            android:text="@string/start_tracking"
+            android:textSize="16sp"
+            android:textColor="@android:color/white"
+            android:textStyle="bold"
+            app:cornerRadius="28dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/destinationRow"
+            android:layout_marginTop="0dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:layout_marginBottom="12dp"
+            app:layout_constraintVertical_bias="0.0" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

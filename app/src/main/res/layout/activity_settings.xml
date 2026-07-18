@@ -1,0 +1,371 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/background">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="16dp">
+
+        <TextView
+            android:id="@+id/settingsTitle"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="Settings"
+            android:textColor="@color/on_surface"
+            android:textSize="24sp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/tutorialHelpButton"
+            app:layout_constraintTop_toTopOf="parent"
+            android:layout_marginTop="16dp" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/tutorialHelpButton"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:text="?"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:gravity="center"
+            android:contentDescription="Tutorial"
+            app:backgroundTint="@color/accent_blue"
+            app:cornerRadius="20dp"
+            android:padding="0dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@id/settingsTitle"
+            app:layout_constraintBottom_toBottomOf="@id/settingsTitle"
+            android:layout_marginEnd="8dp" />
+
+        <View
+            android:id="@+id/divider1"
+            android:layout_width="0dp"
+            android:layout_height="1dp"
+            android:background="#33FFFFFF"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/settingsTitle"
+            android:layout_marginTop="16dp" />
+
+        <TextView
+            android:id="@+id/permissionsLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Permissions"
+            android:textColor="@color/accent_blue"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/divider1"
+            android:layout_marginTop="16dp" />
+
+        <TextView
+            android:id="@+id/fineLocationStatus"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="Fine Location: checking..."
+            android:textColor="@color/on_surface"
+            android:textSize="14sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/permissionsLabel"
+            android:layout_marginTop="8dp" />
+
+        <TextView
+            android:id="@+id/backgroundLocationStatus"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="Background Location: checking..."
+            android:textColor="@color/on_surface"
+            android:textSize="14sp"
+            android:visibility="gone"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/fineLocationStatus"
+            android:layout_marginTop="4dp" />
+
+        <TextView
+            android:id="@+id/notificationsStatus"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="Notifications: checking..."
+            android:textColor="@color/on_surface"
+            android:textSize="14sp"
+            android:visibility="gone"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/backgroundLocationStatus"
+            android:layout_marginTop="4dp" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/requestPermissionsButton"
+            android:layout_width="0dp"
+            android:layout_height="48dp"
+            android:text="Re-request Denied Permissions"
+            android:textSize="14sp"
+            app:cornerRadius="24dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/notificationsStatus"
+            android:layout_marginTop="16dp" />
+
+        <View
+            android:id="@+id/divider2"
+            android:layout_width="0dp"
+            android:layout_height="1dp"
+            android:background="#33FFFFFF"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/requestPermissionsButton"
+            android:layout_marginTop="16dp" />
+
+        <TextView
+            android:id="@+id/radiusLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Alert Radius"
+            android:textColor="@color/accent_blue"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/divider2"
+            android:layout_marginTop="16dp" />
+
+        <TextView
+            android:id="@+id/radiusValueText"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="300 m"
+            android:textColor="@color/on_surface"
+            android:textSize="14sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/radiusLabel"
+            android:layout_marginTop="4dp" />
+
+        <SeekBar
+            android:id="@+id/radiusSeekBar"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:max="19"
+            android:progress="5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/radiusValueText"
+            android:layout_marginTop="4dp" />
+
+        <TextView
+            android:id="@+id/radiusRangeHint"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="50 m — 1000 m"
+            android:textColor="#88FFFFFF"
+            android:textSize="11sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/radiusSeekBar" />
+
+        <View
+            android:id="@+id/dividerBattery"
+            android:layout_width="0dp"
+            android:layout_height="1dp"
+            android:background="#33FFFFFF"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/radiusRangeHint"
+            android:layout_marginTop="16dp" />
+
+        <TextView
+            android:id="@+id/batteryLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Battery &amp; Alert"
+            android:textColor="@color/accent_blue"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/dividerBattery"
+            android:layout_marginTop="16dp" />
+
+        <TextView
+            android:id="@+id/batteryInfo"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="Disable battery optimization to keep tracking alive when phone is locked"
+            android:textColor="#88FFFFFF"
+            android:textSize="12sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/batteryLabel"
+            android:layout_marginTop="4dp" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/batteryOptimizationButton"
+            android:layout_width="0dp"
+            android:layout_height="48dp"
+            android:text="Disable Battery Optimization"
+            android:textSize="14sp"
+            app:cornerRadius="24dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/batteryInfo"
+            android:layout_marginTop="8dp" />
+
+        <TextView
+            android:id="@+id/fullscreenInfo"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="For alert to show on lock screen automatically, enable 'Full-screen intent' in notification settings"
+            android:textColor="#88FFFFFF"
+            android:textSize="12sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/batteryOptimizationButton"
+            android:layout_marginTop="12dp" />
+
+        <View
+            android:id="@+id/divider3"
+            android:layout_width="0dp"
+            android:layout_height="1dp"
+            android:background="#33FFFFFF"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/fullscreenInfo"
+            android:layout_marginTop="16dp" />
+
+        <TextView
+            android:id="@+id/placesLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Saved Places"
+            android:textColor="@color/accent_blue"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/divider3"
+            android:layout_marginTop="16dp" />
+
+        <TextView
+            android:id="@+id/savedPlacesInfo"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="Save your favorite destinations for quick access"
+            android:textColor="#88FFFFFF"
+            android:textSize="12sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/placesLabel"
+            android:layout_marginTop="4dp" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/savedPlacesButton"
+            android:layout_width="0dp"
+            android:layout_height="48dp"
+            android:text="View Saved Places"
+            android:textSize="14sp"
+            app:cornerRadius="24dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/savedPlacesInfo"
+            android:layout_marginTop="8dp" />
+
+        <TextView
+            android:id="@+id/tripHistoryLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Trip History"
+            android:textColor="@color/accent_blue"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/savedPlacesButton"
+            android:layout_marginTop="16dp" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/tripHistoryButton"
+            android:layout_width="0dp"
+            android:layout_height="48dp"
+            android:text="View Trip History"
+            android:textSize="14sp"
+            app:cornerRadius="24dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tripHistoryLabel"
+            android:layout_marginTop="8dp" />
+
+        <TextView
+            android:id="@+id/guideLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Help &amp; Guide"
+            android:textColor="@color/accent_blue"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tripHistoryButton"
+            android:layout_marginTop="16dp" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/guideButton"
+            android:layout_width="0dp"
+            android:layout_height="48dp"
+            android:text="📖 View Full Guide"
+            android:textSize="14sp"
+            app:cornerRadius="24dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/guideLabel"
+            android:layout_marginTop="8dp" />
+
+        <View
+            android:id="@+id/divider4"
+            android:layout_width="0dp"
+            android:layout_height="1dp"
+            android:background="#33FFFFFF"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/guideButton"
+            android:layout_marginTop="16dp" />
+
+        <TextView
+            android:id="@+id/cacheLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Storage"
+            android:textColor="@color/accent_blue"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/divider4"
+            android:layout_marginTop="16dp" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/clearCacheButton"
+            android:layout_width="0dp"
+            android:layout_height="48dp"
+            android:text="Clear Map Cache"
+            android:textSize="14sp"
+            app:cornerRadius="24dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/cacheLabel"
+            android:layout_marginTop="12dp" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/clearDataButton"
+            android:layout_width="0dp"
+            android:layout_height="48dp"
+            android:text="Open App Info (Clear Data)"
+            android:textSize="14sp"
+            app:cornerRadius="24dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/clearCacheButton"
+            android:layout_marginTop="8dp" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</ScrollView>
