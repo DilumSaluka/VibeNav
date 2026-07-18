@@ -30,12 +30,33 @@ jobs:
           distribution: temurin
           java-version: 17
 
-      - uses: github/codeql-action/init@v3
+      - name: Setup Android SDK
+        run: |
+          mkdir -p $HOME/android/cmdline-tools
+          curl -sL https://dl.google.com/android/repository/commandlinetools-linux-10406996_latest.zip -o /tmp/cmdline-tools.zip
+          unzip -q /tmp/cmdline-tools.zip -d $HOME/android/cmdline-tools/
+          mv $HOME/android/cmdline-tools/cmdline-tools $HOME/android/cmdline-tools/latest
+          echo "ANDROID_HOME=$HOME/android" >> $GITHUB_ENV
+          echo "$HOME/android/cmdline-tools/latest/bin" >> $GITHUB_PATH
+          yes | $HOME/android/cmdline-tools/latest/bin/sdkmanager --sdk_root=$HOME/android --licenses > /dev/null 2>&1 || true
+          $HOME/android/cmdline-tools/latest/bin/sdkmanager --sdk_root=$HOME/android "platforms;android-34" "build-tools;34.0.0" > /dev/null 2>&1
+        shell: bash
+
+      - name: Generate Gradle Wrapper
+        run: |
+          gradle wrapper --gradle-version 8.5
+
+      - uses: github/codeql-action/init@v4
         with:
           languages: ${{ matrix.language }}
           queries: security-extended
-          build-mode: none
 
-      - uses: github/codeql-action/analyze@v3
+      - name: Build with Gradle
+        run: |
+          echo "sdk.dir=$ANDROID_HOME" > local.properties
+          ./gradlew assembleDebug --no-daemon
+        shell: bash
+
+      - uses: github/codeql-action/analyze@v4
         with:
           category: '/language:${{matrix.language}}'
