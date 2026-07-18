@@ -1,8 +1,29 @@
 # VibeNav
 
+[![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
+[![Latest Release](https://img.shields.io/github/v/release/DilumSaluka/VibeNav?label=version)](https://github.com/DilumSaluka/VibeNav/releases)
+[![Build APK](https://github.com/DilumSaluka/VibeNav/actions/workflows/build-apk.yml/badge.svg)](https://github.com/DilumSaluka/VibeNav/actions/workflows/build-apk.yml)
+[![CodeQL](https://github.com/DilumSaluka/VibeNav/actions/workflows/codeql.yml/badge.svg)](https://github.com/DilumSaluka/VibeNav/actions/workflows/codeql.yml)
+[![Code scanning](https://img.shields.io/badge/security-CodeQL-purple)](https://github.com/DilumSaluka/VibeNav/security)
+[![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen)](CONTRIBUTING.md)
+
 **Navigate with confidence.** VibeNav is a free Android navigation app that tracks your live location on OpenStreetMap and alerts you — with vibration, sound, and voice — when you're approaching your destination. No API keys, no cost, no ads.
 
 Created by **[Dilum Saluka](https://github.com/DilumSaluka)**.
+
+---
+
+## 📲 Download
+
+Get the latest APK from the **[Releases page](https://github.com/DilumSaluka/VibeNav/releases)** — just open the link on your phone and tap to install.
+
+| Version | Download |
+|---------|----------|
+| v1.0 | [app-debug.apk](https://github.com/DilumSaluka/VibeNav/releases/download/v1.0/app-debug.apk) (8.3 MB) |
+
+> ⚠ Enable **Install from unknown apps** in your phone settings to sideload.
+
+---
 
 ## Features
 
@@ -27,7 +48,9 @@ Created by **[Dilum Saluka](https://github.com/DilumSaluka)**.
 | 📖 **Tutorial** | 12-page step-by-step guide on first launch |
 | 🌙 **Day/Night Theme** | Auto-switches between light and dark colors |
 
-## Build Instructions
+---
+
+## Build from Source
 
 ### Prerequisites
 - [Android Studio](https://developer.android.com/studio) (free)
@@ -43,16 +66,41 @@ Created by **[Dilum Saluka](https://github.com/DilumSaluka)**.
 - **Location** — "Allow all the time" for background tracking
 - **Notifications** — required for tracking service and alerts
 
+---
+
 ## Tech Stack
-- **Kotlin** — Android app logic
-- **osmdroid** — OpenStreetMap rendering
-- **Nominatim** — free address geocoding & search
-- **Open-Meteo** — free weather API (no key needed)
-- **Android Foreground Service** — background GPS tracking
-- **TextToSpeech** — voice distance announcements
-- **ToneGenerator + Vibrator** — audio and haptic alerts
+
+| Layer | Technology |
+|-------|-----------|
+| Language | **Kotlin** |
+| Map | **osmdroid** (OpenStreetMap) |
+| Geocoding | **Nominatim** (free, no API key) |
+| Weather | **Open-Meteo** (free, no API key) |
+| Tracking | **Android Foreground Service** |
+| Voice | **TextToSpeech** |
+| Alerts | **ToneGenerator + Vibrator** |
+| CI/CD | **GitHub Actions** — auto-build APK on tags |
+| Security | **CodeQL** scanning + **Dependabot** alerts |
+
+---
+
+## Security
+
+- [Private vulnerability reporting](https://github.com/DilumSaluka/VibeNav/security/advisories) — report issues privately
+- [CodeQL analysis](https://github.com/DilumSaluka/VibeNav/security/code-scanning) runs on every push
+- [Dependabot](https://github.com/DilumSaluka/VibeNav/security/dependabot) monitors dependency vulnerabilities
+- See [SECURITY.md](.github/SECURITY.md) for details
+
+---
+
+## Contributing
+
+See [CONTRIBUTING.md](CONTRIBUTING.md) for guidelines. All contributions welcome!
+
+---
 
 ## License
+
 MIT License — see [LICENSE](LICENSE) file.
 
 Copyright (c) 2026 Dilum Saluka
