@@ -19,6 +19,7 @@ Get the latest APK from the **[Releases page](https://github.com/DilumSaluka/Vib
 
 | Version | Download |
 |---------|----------|
+| v1.1 | [app-debug.apk](https://github.com/DilumSaluka/VibeNav/releases/download/v1.1/app-debug.apk) (latest) |
 | v1.0 | [app-debug.apk](https://github.com/DilumSaluka/VibeNav/releases/download/v1.0/app-debug.apk) (8.3 MB) |
 
 > ⚠ Enable **Install from unknown apps** in your phone settings to sideload.
@@ -46,6 +47,7 @@ Get the latest APK from the **[Releases page](https://github.com/DilumSaluka/Vib
 | 📤 **Share** | Send destination as Google Maps link via any app |
 | 🧭 **Direction Arrow** | Blue circle with rotating arrow pointing toward destination |
 | 📖 **Tutorial** | 12-page step-by-step guide on first launch |
+| 📲 **In-App Updates** | Check for new versions and install directly from Settings |
 | 🌙 **Day/Night Theme** | Auto-switches between light and dark colors |
 
 ---
@@ -81,6 +83,7 @@ Get the latest APK from the **[Releases page](https://github.com/DilumSaluka/Vib
 | Alerts | **ToneGenerator + Vibrator** |
 | CI/CD | **GitHub Actions** — auto-build APK on tags |
 | Security | **CodeQL** scanning + **Dependabot** alerts |
+| Updates | **GitHub Releases API** — in-app update checker + download |
 
 ---
 
