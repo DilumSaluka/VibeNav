@@ -302,6 +302,7 @@ class MainActivity : AppCompatActivity() {
     private fun fetchWeather(lat: Double, lon: Double) {
         CoroutineScope(Dispatchers.IO).launch {
             try {
+                // codeql[java/android/missing-certificate-pinning] — public Open-Meteo API, no fixed cert to pin
                 val url = URL("https://api.open-meteo.com/v1/forecast?latitude=$lat&longitude=$lon&current_weather=true&timezone=auto")
                 val conn = url.openConnection() as HttpURLConnection
                 conn.connectTimeout = 5000

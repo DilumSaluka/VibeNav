@@ -28,6 +28,7 @@ class GeocoderHelper(private val context: Context) {
         if (results.isEmpty()) {
             try {
                 val encodedQuery = java.net.URLEncoder.encode(query, "UTF-8")
+                // codeql[java/android/missing-certificate-pinning] — public Nominatim API, no fixed cert to pin
                 val url = URL("https://nominatim.openstreetmap.org/search?q=$encodedQuery&format=json&limit=5")
                 val conn = url.openConnection() as HttpURLConnection
                 conn.setRequestProperty("User-Agent", "VibeNav/1.0 (Android)")
@@ -80,6 +81,7 @@ class GeocoderHelper(private val context: Context) {
         } catch (_: Exception) { }
 
         try {
+            // codeql[java/android/missing-certificate-pinning] — public Nominatim API, no fixed cert to pin
             val url = URL("https://nominatim.openstreetmap.org/reverse?format=json&lat=$lat&lon=$lon")
             val conn = url.openConnection() as HttpURLConnection
             conn.setRequestProperty("User-Agent", "VibeNav/1.0 (Android)")
