@@ -12,27 +12,37 @@ import android.location.Address
 
 import android.os.Build
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
+import android.text.Editable
+import android.text.TextWatcher
 import android.view.GestureDetector
 import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.EditorInfo
 import android.view.inputmethod.InputMethodManager
+import android.widget.ArrayAdapter
 import android.widget.EditText
+import android.widget.ListView
 import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.content.ContextCompat
 import com.google.android.material.button.MaterialButton
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import org.json.JSONArray
 import org.json.JSONObject
 import java.net.HttpURLConnection
 import java.net.URL
+import java.net.URLEncoder
 import kotlin.math.*
 import org.osmdroid.config.Configuration
 import org.osmdroid.tileprovider.tilesource.TileSourceFactory
@@ -41,6 +51,7 @@ import org.osmdroid.util.GeoPoint
 import org.osmdroid.views.MapView
 import org.osmdroid.views.overlay.Marker
 import org.osmdroid.views.overlay.Polygon
+import org.osmdroid.views.overlay.Polyline
 import org.osmdroid.views.overlay.compass.CompassOverlay
 import org.osmdroid.views.overlay.gestures.RotationGestureOverlay
 import org.osmdroid.views.overlay.mylocation.GpsMyLocationProvider
@@ -64,10 +75,24 @@ class MainActivity : AppCompatActivity() {
     private lateinit var destinationLabel: TextView
     private lateinit var weatherText: TextView
     private lateinit var buttonRow: android.widget.LinearLayout
+    private lateinit var speedMeter: android.view.View
+    private lateinit var speedValue: TextView
+    private lateinit var voiceToggleButton: MaterialButton
+    private lateinit var themeToggleButton: MaterialButton
+    private var routePolyline: Polyline? = null
+    private var roadDistanceKm: Double = 0.0
+    private var roadDurationSec: Int = 0
+
+    private lateinit var searchSuggestions: ListView
+    private lateinit var searchAdapter: ArrayAdapter<String>
+    private val searchResults = mutableListOf<Triple<String, Double, Double>>()
+    private val searchHandler = Handler(Looper.getMainLooper())
+    private var searchJob: Job? = null
 
     private val geocoderHelper by lazy { GeocoderHelper(this) }
     private val proximityMonitor = ProximityMonitor()
     private var isTracking = false
+    private var voiceEnabled = true
     private var destinationMarker: Marker? = null
     private var directionArrow: Marker? = null
     private var radiusCircle: Polygon? = null
@@ -125,6 +150,10 @@ class MainActivity : AppCompatActivity() {
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        val savedMode = prefs.getInt("night_mode", -1)
+        if (savedMode != -1) {
+            AppCompatDelegate.setDefaultNightMode(savedMode)
+        }
         super.onCreate(savedInstanceState)
 
         Configuration.getInstance().apply {
@@ -151,7 +180,28 @@ class MainActivity : AppCompatActivity() {
         shareButton = findViewById(R.id.shareButton)
         buttonRow = findViewById(R.id.buttonRow)
         weatherText = findViewById(R.id.weatherText)
+        speedMeter = findViewById(R.id.speedMeter)
+        speedValue = findViewById(R.id.speedValue)
+        voiceToggleButton = findViewById(R.id.voiceToggleButton)
+        themeToggleButton = findViewById(R.id.themeToggleButton)
+        searchSuggestions = findViewById(R.id.searchSuggestions)
         helpButton = findViewById(R.id.helpButton)
+
+        searchAdapter = ArrayAdapter(this, android.R.layout.simple_list_item_1)
+        searchSuggestions.adapter = searchAdapter
+        searchSuggestions.setOnItemClickListener { _, _, position, _ ->
+            val (name, lat, lon) = searchResults[position]
+            searchSuggestions.visibility = View.GONE
+            searchInput.setText("")
+            searchInput.clearFocus()
+            hideKeyboard()
+            placePin(GeoPoint(lat, lon))
+            mapView.controller.animateTo(GeoPoint(lat, lon), 15.0, 1000L)
+        }
+
+        voiceEnabled = prefs.getBoolean("voice_alerts_enabled", true)
+        updateVoiceButtonIcon()
+        updateThemeButtonIcon()
 
         initializeMap()
         setupSearch()
@@ -176,6 +226,7 @@ class MainActivity : AppCompatActivity() {
         super.onResume()
         isForeground = true
         mapView.onResume()
+        updateThemeButtonIcon()
         if (!permissionDialogShownThisSession) {
             permissionDialogShownThisSession = true
             showPermissionChoiceDialog()
@@ -367,6 +418,17 @@ class MainActivity : AppCompatActivity() {
 
         mapView.invalidate()
 
+        if (currentUserLat != 0.0 || currentUserLon != 0.0) {
+            fetchRoute(currentUserLat, currentUserLon, geoPoint.latitude, geoPoint.longitude)
+        } else {
+            try {
+                val lastLoc = myLocationOverlay?.lastFix
+                if (lastLoc != null) {
+                    fetchRoute(lastLoc.latitude, lastLoc.longitude, geoPoint.latitude, geoPoint.longitude)
+                }
+            } catch (_: Exception) {}
+        }
+
         CoroutineScope(Dispatchers.IO).launch {
             val info = geocoderHelper.reverseGeocode(geoPoint.latitude, geoPoint.longitude)
             launch(Dispatchers.Main) {
@@ -375,9 +437,18 @@ class MainActivity : AppCompatActivity() {
                     it.longitude = geoPoint.longitude
                     it.setAddressLine(0, info.fullDisplayName ?: info.formatCurrentLocation())
                 }
-                destinationLabel.text = info.fullDisplayName ?: info.formatCurrentLocation()
+                destinationLabel.text = (info.fullDisplayName ?: info.formatCurrentLocation()) + roadInfoSuffix()
             }
         }
+    }
+
+    private fun roadInfoSuffix(): String {
+        return if (roadDistanceKm > 0) {
+            val min = roadDurationSec / 60
+            val sec = roadDurationSec % 60
+            val timeStr = if (min > 0) "${min}m ${sec}s" else "${sec}s"
+            "\n🚗 ${String.format("%.1f", roadDistanceKm)} km · $timeStr"
+        } else ""
     }
 
     private fun buildCirclePoints(center: GeoPoint, radiusMeters: Double): ArrayList<GeoPoint> {
@@ -453,12 +524,35 @@ class MainActivity : AppCompatActivity() {
         searchInput.setOnEditorActionListener { _, actionId, _ ->
             if (actionId == EditorInfo.IME_ACTION_SEARCH) {
                 hideKeyboard()
+                searchSuggestions.visibility = View.GONE
                 val query = searchInput.text.toString().trim()
                 if (query.isNotEmpty()) {
                     geocodeSearch(query)
                 }
                 true
             } else false
+        }
+
+        searchInput.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {}
+            override fun afterTextChanged(s: Editable?) {
+                searchHandler.removeCallbacksAndMessages(null)
+                val query = s?.toString()?.trim() ?: ""
+                if (query.length >= 3) {
+                    searchHandler.postDelayed({
+                        fetchAutocompleteSuggestions(query)
+                    }, 500)
+                } else {
+                    searchSuggestions.visibility = View.GONE
+                }
+            }
+        })
+
+        searchInput.setOnFocusChangeListener { _, hasFocus ->
+            if (!hasFocus) {
+                searchSuggestions.postDelayed({ searchSuggestions.visibility = View.GONE }, 200)
+            }
         }
     }
 
@@ -476,6 +570,112 @@ class MainActivity : AppCompatActivity() {
                 }
             }
         }
+    }
+
+    private fun fetchAutocompleteSuggestions(query: String) {
+        searchJob?.cancel()
+        searchJob = CoroutineScope(Dispatchers.IO).launch {
+            try {
+                val url = URL("https://nominatim.openstreetmap.org/search?q=${URLEncoder.encode(query, "UTF-8")}&format=json&limit=5&addressdetails=1")
+                val conn = url.openConnection() as HttpURLConnection
+                conn.setRequestProperty("User-Agent", packageName)
+                conn.connectTimeout = 5000
+                conn.readTimeout = 5000
+                val json = conn.inputStream.bufferedReader().readText()
+                conn.disconnect()
+                val arr = JSONArray(json)
+                val items = mutableListOf<Triple<String, Double, Double>>()
+                for (i in 0 until arr.length()) {
+                    val obj = arr.getJSONObject(i)
+                    val name = obj.getString("display_name")
+                    val lat = obj.getDouble("lat")
+                    val lon = obj.getDouble("lon")
+                    items.add(Triple(name, lat, lon))
+                }
+                launch(Dispatchers.Main) {
+                    searchResults.clear()
+                    val names = mutableListOf<String>()
+                    items.forEach { (name, lat, lon) ->
+                        searchResults.add(Triple(name, lat, lon))
+                        names.add(name)
+                    }
+                    if (names.isNotEmpty()) {
+                        searchAdapter.clear()
+                        searchAdapter.addAll(names)
+                        searchAdapter.notifyDataSetChanged()
+                        searchSuggestions.visibility = View.VISIBLE
+                    } else {
+                        searchSuggestions.visibility = View.GONE
+                    }
+                }
+            } catch (_: Exception) {
+                launch(Dispatchers.Main) { searchSuggestions.visibility = View.GONE }
+            }
+        }
+    }
+
+    private fun fetchRoute(fromLat: Double, fromLon: Double, toLat: Double, toLon: Double) {
+        CoroutineScope(Dispatchers.IO).launch {
+            try {
+                val url = URL("https://router.project-osrm.org/route/v1/driving/$fromLon,$fromLat;$toLon,$toLat?overview=full&geometries=geojson&steps=false")
+                val conn = url.openConnection() as HttpURLConnection
+                conn.setRequestProperty("User-Agent", packageName)
+                conn.connectTimeout = 8000
+                conn.readTimeout = 8000
+                val json = conn.inputStream.bufferedReader().readText()
+                conn.disconnect()
+                val obj = JSONObject(json)
+                if (obj.getString("code") != "Ok") {
+                    launch(Dispatchers.Main) { return@launch }
+                }
+                val route = obj.getJSONArray("routes").getJSONObject(0)
+                val distMeters = route.getDouble("distance")
+                val durSeconds = route.getDouble("duration")
+                val geometry = route.getJSONObject("geometry")
+                val coords = geometry.getJSONArray("coordinates")
+                val points = mutableListOf<GeoPoint>()
+                for (i in 0 until coords.length()) {
+                    val c = coords.getJSONArray(i)
+                    points.add(GeoPoint(c.getDouble(1), c.getDouble(0)))
+                }
+                launch(Dispatchers.Main) {
+                    roadDistanceKm = distMeters / 1000.0
+                    roadDurationSec = durSeconds.toInt()
+                    drawRoute(points)
+                    updateRoadInfo()
+                }
+            } catch (_: Exception) {
+                launch(Dispatchers.Main) { Toast.makeText(this@MainActivity, "⚠ Route unavailable", Toast.LENGTH_SHORT).show() }
+            }
+        }
+    }
+
+    private fun drawRoute(points: List<GeoPoint>) {
+        routePolyline?.let { mapView.overlays.remove(it) }
+        if (points.size < 2) return
+        routePolyline = Polyline(mapView).apply {
+            setPoints(java.util.ArrayList(points))
+            outlinePaint.color = Color.argb(200, 41, 121, 255)
+            outlinePaint.strokeWidth = 6f
+            outlinePaint.isAntiAlias = true
+            mapView.overlays.add(this)
+        }
+        mapView.invalidate()
+        Toast.makeText(this, "🛣 Route loaded", Toast.LENGTH_SHORT).show()
+    }
+
+    private fun updateRoadInfo() {
+        val currentText = destinationLabel.text.toString()
+        val baseText = currentText.split("\n")[0]
+        destinationLabel.text = baseText + roadInfoSuffix()
+    }
+
+    private fun removeRoute() {
+        routePolyline?.let { mapView.overlays.remove(it) }
+        routePolyline = null
+        roadDistanceKm = 0.0
+        roadDurationSec = 0
+        mapView.invalidate()
     }
 
     private fun setupTrackingButton() {
@@ -526,6 +726,32 @@ class MainActivity : AppCompatActivity() {
             val intent = Intent(this, HelpActivity::class.java)
             startActivity(intent)
         }
+
+        voiceToggleButton.setOnClickListener {
+            voiceEnabled = !voiceEnabled
+            prefs.edit().putBoolean("voice_alerts_enabled", voiceEnabled).apply()
+            updateVoiceButtonIcon()
+        }
+
+        themeToggleButton.setOnClickListener {
+            val currentMode = AppCompatDelegate.getDefaultNightMode()
+            val newMode = when (currentMode) {
+                AppCompatDelegate.MODE_NIGHT_YES -> AppCompatDelegate.MODE_NIGHT_NO
+                else -> AppCompatDelegate.MODE_NIGHT_YES
+            }
+            AppCompatDelegate.setDefaultNightMode(newMode)
+            prefs.edit().putInt("night_mode", newMode).apply()
+            recreate()
+        }
+    }
+
+    private fun updateVoiceButtonIcon() {
+        voiceToggleButton.text = if (voiceEnabled) "🔊" else "🔇"
+    }
+
+    private fun updateThemeButtonIcon() {
+        val isDark = AppCompatDelegate.getDefaultNightMode() == AppCompatDelegate.MODE_NIGHT_YES
+        themeToggleButton.text = if (isDark) "☀️" else "🌙"
     }
 
     private fun setupSettingsFab() {
@@ -601,6 +827,7 @@ class MainActivity : AppCompatActivity() {
         directionArrow = null
         radiusCircle?.let { mapView.overlays.remove(it) }
         radiusCircle = null
+        removeRoute()
         selectedAddress = null
         proximityMonitor.reset()
         destinationLabel.visibility = android.view.View.GONE
@@ -639,6 +866,7 @@ class MainActivity : AppCompatActivity() {
         savePlaceButton.visibility = android.view.View.GONE
         shareButton.visibility = android.view.View.GONE
         buttonRow.visibility = android.view.View.GONE
+        speedMeter.visibility = android.view.View.VISIBLE
 
         proximityMonitor.setDestination(address.latitude, address.longitude)
         proximityMonitor.setThreshold(thresholdMeters)
@@ -650,6 +878,10 @@ class MainActivity : AppCompatActivity() {
             strokeColor = Color.argb(120, 0, 255, 0)
             strokeWidth = 3f
             mapView.overlays.add(this)
+        }
+
+        if (currentUserLat != 0.0 || currentUserLon != 0.0) {
+            fetchRoute(currentUserLat, currentUserLon, address.latitude, address.longitude)
         }
 
         val intent = Intent(this, TrackingService::class.java).apply {
@@ -677,9 +909,11 @@ class MainActivity : AppCompatActivity() {
         savePlaceButton.visibility = android.view.View.VISIBLE
         shareButton.visibility = android.view.View.VISIBLE
         buttonRow.visibility = android.view.View.VISIBLE
+        speedMeter.visibility = android.view.View.GONE
 
         directionArrow?.let { mapView.overlays.remove(it) }
         directionArrow = null
+        removeRoute()
         mapView.invalidate()
 
         val intent = Intent(this, TrackingService::class.java).apply {
@@ -737,6 +971,13 @@ class MainActivity : AppCompatActivity() {
                 val inRange = intent.getBooleanExtra(TrackingService.EXTRA_PROXIMITY, false)
                 val speedKmh = intent.getFloatExtra(TrackingService.EXTRA_SPEED, 0f)
                 val etaSeconds = intent.getIntExtra(TrackingService.EXTRA_ETA, -1)
+
+                if (speedKmh > 1f) {
+                    speedValue.text = String.format("%.0f", speedKmh)
+                    speedMeter.visibility = android.view.View.VISIBLE
+                } else {
+                    speedMeter.visibility = android.view.View.INVISIBLE
+                }
 
                 val speedText = if (speedKmh > 1f) String.format("%.0f km/h", speedKmh) else ""
                 val etaText = if (etaSeconds > 0) {
@@ -799,6 +1040,7 @@ class MainActivity : AppCompatActivity() {
                     savePlaceButton.visibility = android.view.View.VISIBLE
                     shareButton.visibility = android.view.View.VISIBLE
                     buttonRow.visibility = android.view.View.VISIBLE
+                    speedMeter.visibility = android.view.View.GONE
                     directionArrow?.let { mapView.overlays.remove(it) }
                     directionArrow = null
                     mapView.invalidate()

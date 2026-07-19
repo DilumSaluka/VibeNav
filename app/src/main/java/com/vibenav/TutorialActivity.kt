@@ -16,7 +16,7 @@ class TutorialActivity : AppCompatActivity() {
         Page("👋", "Welcome to VibeNav",
              "Your smart travel companion.\n\nSet a destination and start walking or driving.\nYour phone will alert you when you get close."),
         Page("🔍", "Search for Places",
-             "Type a place name in the search bar.\n\nTry \"Colombo Fort\" or \"Galle Face\".\nThe map will show you the location."),
+             "Type a place name in the search bar.\n\nTry \"Colombo Fort\" or \"Galle Face\".\nSuggestions appear as you type — just tap one to set the pin.\nThe map will show you the location."),
         Page("👆", "Set a Pin",
              "Press and hold anywhere on the map.\nA red pin will appear at that spot.\nA green circle shows the alert area around it."),
         Page("🛰", "Switch Map View",
@@ -30,13 +30,17 @@ class TutorialActivity : AppCompatActivity() {
         Page("✕", "Clear the Pin",
              "Tap the red X to remove the pin and green alert zone from the map."),
         Page("🚀", "Start Tracking",
-             "Tap the blue button below to begin.\nDuring tracking you will see:\n• Distance to destination\n• Your speed\n• Arrival time\n• Your current street name\n• A blue arrow pointing the way"),
+             "Tap the blue button below to begin.\nDuring tracking you will see:\n• Distance to destination\n• Your speed\n• Arrival time\n• Your current street name\n• A blue arrow pointing the way\n• 🚗 A blue route line on the map\n  showing the road path to your destination"),
         Page("📳", "Arrival Alert",
              "When you enter the green zone:\n• Phone vibrates\n• Loud beep sounds\n• Voice says \"You have arrived\"\n• Full screen alert appears\n\nTap Silence to stop noise.\nTap Stop to end tracking.\n\nTracking stops by itself after 60 seconds."),
         Page("⚙", "Settings",
              "Tap the ⚙ icon to change settings:\n• Alert distance (50m to 1000m)\n• Saved places\n• Trip history\n• Battery settings\n• Map cache"),
         Page("🛡️", "Your Safety",
-             "Your current street name appears at the bottom during tracking.\n\nShare your destination with family so they know your route.")
+             "Your current street name appears at the bottom during tracking.\n\nShare your destination with family so they know your route."),
+        Page("🚗", "Route Line",
+             "A blue line appears on the map showing the actual road path from your location to the destination.\n\nThe road distance and travel time are shown below the place name."),
+        Page("🔊", "Voice & Theme",
+             "🔊 Voice toggle button (top-right of the map) — mute or unmute voice alerts.\n\n🌙 Theme toggle button (top bar, between ? and ⚙) — switch between light and dark mode.")
     )
 
     private var currentPage = 0

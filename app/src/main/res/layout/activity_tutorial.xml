@@ -4,7 +4,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#1A1A2E">
+    android:background="@color/navy_dark">
 
     <TextView
         android:id="@+id/skipText"
@@ -31,7 +31,7 @@
         android:id="@+id/tutorialTitle"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:textColor="@android:color/white"
+            android:textColor="@color/on_navy_dark"
         android:textSize="22sp"
         android:textStyle="bold"
         android:textAlignment="center"
@@ -108,10 +108,10 @@
             android:layout_height="52dp"
             android:text="Next"
             android:textSize="15sp"
-            android:textColor="@android:color/white"
+        android:textColor="@color/on_navy_dark"
             app:cornerRadius="26dp"
             android:paddingHorizontal="36dp"
-            app:backgroundTint="#FF2979FF" />
+            app:backgroundTint="@color/accent_blue" />
 
     </LinearLayout>
 

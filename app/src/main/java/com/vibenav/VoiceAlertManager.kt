@@ -10,6 +10,7 @@ class VoiceAlertManager(context: Context) {
     private var isReady = false
     private var lastSpokenDistance = -1
     private var lastSpokenMessage = ""
+    private val prefs = context.getSharedPreferences("vibenav", Context.MODE_PRIVATE)
 
     init {
         tts = TextToSpeech(context) { status ->
@@ -18,17 +19,26 @@ class VoiceAlertManager(context: Context) {
         }
     }
 
-    fun announceDistance(meters: Int) {
-        if (!isReady) return
+    private fun isVoiceEnabled(): Boolean {
+        return prefs.getBoolean("voice_alerts_enabled", true)
+    }
 
+    fun announceDistance(meters: Int) {
+        if (!isReady || !isVoiceEnabled()) return
+
+        val rounded = ((meters + 50) / 100) * 100
         val message = when {
-            meters <= 50 -> "Arrived at destination"
-            meters <= 100 -> "100 meters away"
-            meters <= 200 -> "200 meters away"
-            meters <= 300 -> "300 meters away"
-            meters <= 500 -> "500 meters away"
-            meters <= 800 -> "800 meters away"
-            meters <= 1000 -> "One kilometer away"
+            rounded <= 0 -> "Arrived at destination"
+            rounded <= 100 -> "100 meters away"
+            rounded <= 200 -> "200 meters away"
+            rounded <= 300 -> "300 meters away"
+            rounded <= 400 -> "400 meters away"
+            rounded <= 500 -> "500 meters away"
+            rounded <= 600 -> "600 meters away"
+            rounded <= 700 -> "700 meters away"
+            rounded <= 800 -> "800 meters away"
+            rounded <= 900 -> "900 meters away"
+            rounded <= 1000 -> "One kilometer away"
             else -> null
         }
 
@@ -39,7 +49,7 @@ class VoiceAlertManager(context: Context) {
     }
 
     fun announceArrived() {
-        if (!isReady) return
+        if (!isReady || !isVoiceEnabled()) return
         speak("You have arrived at your destination")
         lastSpokenMessage = "You have arrived at your destination"
     }

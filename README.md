@@ -19,8 +19,9 @@ Get the latest APK from the **[Releases page](https://github.com/DilumSaluka/Vib
 
 | Version | Download |
 |---------|----------|
-| v1.1 | [app-debug.apk](https://github.com/DilumSaluka/VibeNav/releases/download/v1.1/app-debug.apk) (latest) |
-| v1.0 | [app-debug.apk](https://github.com/DilumSaluka/VibeNav/releases/download/v1.0/app-debug.apk) (8.3 MB) |
+| v1.2 | [app-debug.apk](https://github.com/DilumSaluka/VibeNav/releases/download/v1.2/app-debug.apk) (latest) |
+| v1.1 | [app-debug.apk](https://github.com/DilumSaluka/VibeNav/releases/download/v1.1/app-debug.apk) |
+| v1.0 | [app-debug.apk](https://github.com/DilumSaluka/VibeNav/releases/download/v1.0/app-debug.apk) |
 
 > ⚠ Enable **Install from unknown apps** in your phone settings to sideload.
 
@@ -31,12 +32,13 @@ Get the latest APK from the **[Releases page](https://github.com/DilumSaluka/Vib
 | Feature | Description |
 |---------|-------------|
 | 🗺 **Live Map** | OpenStreetMap + Google Satellite hybrid tiles, zoom up to 22 |
-| 🔍 **Search & Pin** | Type any address (Nominatim) or long-press anywhere on the map |
+| 🔍 **Search & Pin** | Type any address (Nominatim) — suggestions appear as you type; or long-press anywhere on the map |
+| 🚗 **Route Line** | Blue road path (OSRM) from your location to destination with distance and travel time |
 | 📍 **My Location** | One-tap center on your current GPS position |
 | 🛰 **Satellite View** | Toggle between street map and satellite imagery |
 | 🎯 **Tracking** | Background GPS service with live distance, speed, and ETA |
 | 🔊 **Arrival Alert** | Full-screen lock-screen alarm with vibration + beep + voice |
-| 🗣 **Voice Alerts** | Text-to-speech announces distances (1km, 500m, 300m, etc.) and arrival |
+| 🗣 **Voice Alerts** | Text-to-speech announces distances and arrival — mute via 🔊/🔇 button on map |
 | ⚙ **Adjustable Radius** | Set alert trigger distance from 50m to 1000m |
 | ⏱ **Auto-Stop** | Tracking stops automatically 60s after arrival |
 | 🔇 **Notification Controls** | Silence or Stop alert from the notification bar |
@@ -46,9 +48,9 @@ Get the latest APK from the **[Releases page](https://github.com/DilumSaluka/Vib
 | 📜 **Trip History** | Auto-saves every trip with distance, route, and timing |
 | 📤 **Share** | Send destination as Google Maps link via any app |
 | 🧭 **Direction Arrow** | Blue circle with rotating arrow pointing toward destination |
-| 📖 **Tutorial** | 12-page step-by-step guide on first launch |
+| 📖 **Tutorial** | 14-page step-by-step guide on first launch |
 | 📲 **In-App Updates** | Check for new versions and install directly from Settings |
-| 🌙 **Day/Night Theme** | Auto-switches between light and dark colors |
+| 🌙 **Day/Night Theme** | Toggle between light and dark mode — dedicated 🌙/☀️ button in top bar |
 
 ---
 
@@ -76,7 +78,8 @@ Get the latest APK from the **[Releases page](https://github.com/DilumSaluka/Vib
 |-------|-----------|
 | Language | **Kotlin** |
 | Map | **osmdroid** (OpenStreetMap) |
-| Geocoding | **Nominatim** (free, no API key) |
+| Routing | **OSRM** — road path calculation |
+| Geocoding | **Nominatim** — search + autocomplete (free, no API key) |
 | Weather | **Open-Meteo** (free, no API key) |
 | Tracking | **Android Foreground Service** |
 | Voice | **TextToSpeech** |

@@ -14,6 +14,7 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.content.ContextCompat
 import com.google.android.material.button.MaterialButton
 import java.io.File
@@ -35,6 +36,10 @@ class SettingsActivity : AppCompatActivity() {
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        val savedMode = prefs.getInt("night_mode", -1)
+        if (savedMode != -1) {
+            AppCompatDelegate.setDefaultNightMode(savedMode)
+        }
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_settings)
 
@@ -90,9 +95,27 @@ class SettingsActivity : AppCompatActivity() {
             startActivity(intent)
         }
 
+        updateThemeButton()
+        findViewById<MaterialButton>(R.id.themeToggleButton).setOnClickListener {
+            val currentMode = AppCompatDelegate.getDefaultNightMode()
+            val newMode = when (currentMode) {
+                AppCompatDelegate.MODE_NIGHT_YES -> AppCompatDelegate.MODE_NIGHT_NO
+                else -> AppCompatDelegate.MODE_NIGHT_YES
+            }
+            AppCompatDelegate.setDefaultNightMode(newMode)
+            prefs.edit().putInt("night_mode", newMode).apply()
+            recreate()
+        }
+
         findViewById<MaterialButton>(R.id.checkUpdateButton).setOnClickListener {
             checkForUpdates()
         }
+    }
+
+    private fun updateThemeButton() {
+        val btn = findViewById<MaterialButton>(R.id.themeToggleButton)
+        val isDark = AppCompatDelegate.getDefaultNightMode() == AppCompatDelegate.MODE_NIGHT_YES
+        btn.text = if (isDark) "☀️ Light Mode" else "🌙 Dark Mode"
     }
 
     private fun checkForUpdates() {
