@@ -88,6 +88,10 @@ class MainActivity : AppCompatActivity() {
     private val searchResults = mutableListOf<Triple<String, Double, Double>>()
     private val searchHandler = Handler(Looper.getMainLooper())
     private var searchJob: Job? = null
+    private val routeRefetchHandler = Handler(Looper.getMainLooper())
+    private var routeRefetchRunnable: Runnable? = null
+    private var lastRouteFetchLat = 0.0
+    private var lastRouteFetchLon = 0.0
 
     private val geocoderHelper by lazy { GeocoderHelper(this) }
     private val proximityMonitor = ProximityMonitor()
@@ -1013,6 +1017,22 @@ class MainActivity : AppCompatActivity() {
                     currentUserLon = userLon
                     drawUserCircle(userLat, userLon)
                     updateCurrentLocation(userLat, userLon)
+
+                    val dest = selectedAddress
+                    if (dest != null && !inRange) {
+                        val dx = userLat - lastRouteFetchLat
+                        val dy = userLon - lastRouteFetchLon
+                        val movedMeters = Math.sqrt(dx * dx + dy * dy) * 111320.0
+                        if (movedMeters > 500) {
+                            routeRefetchRunnable?.let { routeRefetchHandler.removeCallbacks(it) }
+                            routeRefetchRunnable = Runnable {
+                                lastRouteFetchLat = userLat
+                                lastRouteFetchLon = userLon
+                                fetchRoute(userLat, userLon, dest.latitude, dest.longitude)
+                            }
+                            routeRefetchHandler.postDelayed(routeRefetchRunnable!!, 3000)
+                        }
+                    }
                 }
             }
         }

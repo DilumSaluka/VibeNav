@@ -2,9 +2,11 @@ package com.vibenav
 
 import android.Manifest
 import android.app.AlertDialog
+import android.app.ProgressDialog
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.location.LocationManager
 import android.os.Build
 import android.os.Bundle
 import android.provider.Settings
@@ -17,6 +19,9 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.content.ContextCompat
 import com.google.android.material.button.MaterialButton
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import java.io.File
 
 class SettingsActivity : AppCompatActivity() {
@@ -109,6 +114,10 @@ class SettingsActivity : AppCompatActivity() {
 
         findViewById<MaterialButton>(R.id.checkUpdateButton).setOnClickListener {
             checkForUpdates()
+        }
+
+        findViewById<MaterialButton>(R.id.offlineDownloadButton).setOnClickListener {
+            downloadOfflineArea()
         }
     }
 
@@ -247,6 +256,73 @@ class SettingsActivity : AppCompatActivity() {
             startActivity(intent)
         } else {
             requestPermissionLauncher.launch(denied.toTypedArray())
+        }
+    }
+
+    private fun downloadOfflineArea() {
+        val lm = getSystemService(LOCATION_SERVICE) as LocationManager
+        val hasGps = try {
+            lm.isProviderEnabled(LocationManager.GPS_PROVIDER)
+        } catch (_: Exception) { false }
+
+        val locText = if (hasGps) "your current location" else "Colombo (default area)"
+
+        AlertDialog.Builder(this).apply {
+            setTitle("📥 Download Offline Map")
+            setMessage("This will download map tiles for $locText within a 5 km radius at zoom levels 10–18.\n\nThis uses mobile data. Approximate size: 10–50 MB.")
+            setPositiveButton("Download") { _, _ ->
+                startOfflineDownload()
+            }
+            setNegativeButton("Cancel", null)
+            show()
+        }
+    }
+
+    private fun startOfflineDownload() {
+        val lm = getSystemService(LOCATION_SERVICE) as LocationManager
+        var lat = 6.9271  // default Colombo
+        var lon = 79.8612
+        try {
+            val gpsLoc = lm.getLastKnownLocation(LocationManager.GPS_PROVIDER)
+            if (gpsLoc != null) {
+                lat = gpsLoc.latitude
+                lon = gpsLoc.longitude
+            }
+        } catch (_: Exception) {}
+
+        val progressDialog = ProgressDialog(this).apply {
+            setTitle("Downloading Offline Map")
+            setMessage("Downloading tiles...")
+            setProgressStyle(ProgressDialog.STYLE_HORIZONTAL)
+            setCancelable(false)
+            show()
+        }
+
+        val offlineManager = OfflineTileManager(this)
+        val statusText = findViewById<TextView>(R.id.offlineStatus)
+
+        kotlinx.coroutines.CoroutineScope(kotlinx.coroutines.Dispatchers.Main).launch {
+            progressDialog.max = 100
+            progressDialog.progress = 0
+
+            offlineManager.prefetchTiles(
+                centerLat = lat,
+                centerLon = lon,
+                radiusKm = 5.0,
+                minZoom = 10,
+                maxZoom = 18,
+                updateProgress = { downloaded, total ->
+                    progressDialog.max = total
+                    progressDialog.progress = downloaded
+                    progressDialog.setMessage("Downloaded $downloaded / $total tiles")
+                }
+            )
+
+            progressDialog.dismiss()
+            val cacheSize = offlineManager.getCacheSize()
+            val mb = cacheSize / (1024.0 * 1024.0)
+            statusText.text = "✅ Offline map ready — ${String.format("%.1f", mb)} MB cached"
+            Toast.makeText(this@SettingsActivity, "✅ Offline map download complete", Toast.LENGTH_LONG).show()
         }
     }
 

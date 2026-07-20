@@ -34,6 +34,10 @@ class TrackingService : Service() {
     private var prevLocation: Location? = null
     private var prevLocationTime: Long = 0
     private var currentSpeedMs: Float = 0f
+    private var lastSpeedKmh: Float = 0f
+    private var lastEtaSeconds: Int = -1
+    private var destLat: Double = 0.0
+    private var destLon: Double = 0.0
     private var screenOnReceiver: BroadcastReceiver? = null
     private val autoStopHandler = Handler(Looper.getMainLooper())
     private var autoStopPending = false
@@ -82,6 +86,8 @@ class TrackingService : Service() {
                 val lat = intent.getDoubleExtra(EXTRA_DEST_LAT, 0.0)
                 val lon = intent.getDoubleExtra(EXTRA_DEST_LON, 0.0)
                 val threshold = intent.getDoubleExtra(EXTRA_THRESHOLD, 300.0)
+                destLat = lat
+                destLon = lon
                 proximityMonitor.setDestination(lat, lon)
                 proximityMonitor.setThreshold(threshold)
                 startTracking()
@@ -180,6 +186,8 @@ class TrackingService : Service() {
 
         val speedKmh = currentSpeedMs * 3.6f
         val etaSeconds = if (currentSpeedMs > 0.5f) (meters / currentSpeedMs).toInt() else -1
+        lastSpeedKmh = speedKmh
+        lastEtaSeconds = etaSeconds
 
         val distanceIntent = Intent(BROADCAST_DISTANCE).apply {
             putExtra(EXTRA_DISTANCE, meters)
@@ -310,6 +318,7 @@ class TrackingService : Service() {
         return NotificationCompat.Builder(this, CHANNEL_ID)
             .setContentTitle("VibeNav")
             .setContentText("Tracking to destination...")
+            .setSubText("Tap to open map")
             .setSmallIcon(android.R.drawable.ic_menu_mylocation)
             .setContentIntent(openIntent)
             .addAction(android.R.drawable.ic_media_pause, "Stop", stopIntent)
@@ -365,10 +374,21 @@ class TrackingService : Service() {
     }
 
     private fun updateNotification(meters: Int, inRange: Boolean) {
-        val text = if (inRange) {
-            "${formatDistance(meters)} - ARRIVED!"
-        } else {
-            "${formatDistance(meters)} from destination"
+        val speedKmh = lastSpeedKmh
+        val etaSec = lastEtaSeconds
+        val speedText = if (speedKmh > 1f) String.format("%.0f km/h", speedKmh) else ""
+        val etaText = if (etaSec > 0) {
+            val min = etaSec / 60
+            val sec = etaSec % 60
+            if (min > 0) "${min}m ${sec}s" else "${sec}s"
+        } else ""
+
+        val text = when {
+            inRange -> "${formatDistance(meters)} - ARRIVED!"
+            speedText.isNotEmpty() && etaText.isNotEmpty() ->
+                "${formatDistance(meters)} · $etaText · $speedText"
+            speedText.isNotEmpty() -> "${formatDistance(meters)} · $speedText"
+            else -> "${formatDistance(meters)} from destination"
         }
 
         val notification = NotificationCompat.Builder(this, CHANNEL_ID)
@@ -376,6 +396,20 @@ class TrackingService : Service() {
             .setContentText(text)
             .setSubText("Tap to open map")
             .setSmallIcon(android.R.drawable.ic_menu_mylocation)
+            .setContentIntent(
+                PendingIntent.getActivity(
+                    this, 11, Intent(this, MainActivity::class.java).apply {
+                        flags = Intent.FLAG_ACTIVITY_SINGLE_TOP
+                    },
+                    PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
+                )
+            )
+            .addAction(android.R.drawable.ic_media_pause, "Stop",
+                PendingIntent.getService(
+                    this, 10, Intent(this, TrackingService::class.java).apply { action = ACTION_STOP },
+                    PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
+                )
+            )
             .setOngoing(true)
             .setPriority(NotificationCompat.PRIORITY_LOW)
             .setVisibility(NotificationCompat.VISIBILITY_PUBLIC)

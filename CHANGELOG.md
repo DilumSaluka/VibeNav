@@ -4,6 +4,19 @@ All notable changes to VibeNav are documented here.
 
 ---
 
+## v1.3 — 📊 Notification ETA + Live Route Re-fetch + Offline Maps
+*Released: 2026-07-19*
+
+### New Features
+- 📊 **Notification ETA** — Ongoing notification now shows distance, ETA, and speed (e.g. "1.2 km · 5m 30s · 15 km/h") with a Stop button
+- 🔄 **Live Route Re-fetch** — Route line updates as you move more than 500m (3-second debounce, won't spam OSRM)
+- 📥 **Offline Maps** — New "Download Nearby Area" button in Settings caches map tiles (zooms 10–18, ~5km radius) for use without internet; cache size displayed
+
+### Updated
+- 🔧 **Settings** — New "Offline Maps" section with download button and status text
+
+---
+
 ## v1.2 — 🗺 Route Line + Search Autocomplete
 *Released: 2026-07-19*
 

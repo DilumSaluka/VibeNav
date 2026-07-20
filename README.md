@@ -19,7 +19,8 @@ Get the latest APK from the **[Releases page](https://github.com/DilumSaluka/Vib
 
 | Version | Download |
 |---------|----------|
-| v1.2 | [app-debug.apk](https://github.com/DilumSaluka/VibeNav/releases/download/v1.2/app-debug.apk) (latest) |
+| v1.3 | [app-debug.apk](https://github.com/DilumSaluka/VibeNav/releases/download/v1.3/app-debug.apk) (latest) |
+| v1.2 | [app-debug.apk](https://github.com/DilumSaluka/VibeNav/releases/download/v1.2/app-debug.apk) |
 | v1.1 | [app-debug.apk](https://github.com/DilumSaluka/VibeNav/releases/download/v1.1/app-debug.apk) |
 | v1.0 | [app-debug.apk](https://github.com/DilumSaluka/VibeNav/releases/download/v1.0/app-debug.apk) |
 
@@ -50,6 +51,7 @@ Get the latest APK from the **[Releases page](https://github.com/DilumSaluka/Vib
 | 🧭 **Direction Arrow** | Blue circle with rotating arrow pointing toward destination |
 | 📖 **Tutorial** | 14-page step-by-step guide on first launch |
 | 📲 **In-App Updates** | Check for new versions and install directly from Settings |
+| 📥 **Offline Maps** | Download map tiles around your area for use without internet |
 | 🌙 **Day/Night Theme** | Toggle between light and dark mode — dedicated 🌙/☀️ button in top bar |
 
 ---
