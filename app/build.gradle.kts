@@ -59,7 +59,7 @@ dependencies {
     implementation("org.osmdroid:osmdroid-mapsforge:6.1.18")
 
     implementation("com.squareup.okhttp3:okhttp:4.12.0")
-    implementation("org.json:json:20231013")
+    implementation("org.json:json:20260522")
 
     implementation("androidx.preference:preference-ktx:1.2.1")
 }
