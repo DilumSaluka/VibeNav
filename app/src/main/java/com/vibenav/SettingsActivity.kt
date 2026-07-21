@@ -7,6 +7,8 @@ import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.location.LocationManager
+import android.media.RingtoneManager
+import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.provider.Settings
@@ -118,6 +120,54 @@ class SettingsActivity : AppCompatActivity() {
 
         findViewById<MaterialButton>(R.id.offlineDownloadButton).setOnClickListener {
             downloadOfflineArea()
+        }
+
+        updateAlertSoundName()
+        findViewById<MaterialButton>(R.id.pickSoundButton).setOnClickListener {
+            val uriString = prefs.getString("alert_sound_uri", null)
+            val currentUri = if (uriString != null) Uri.parse(uriString) else null
+            val intent = Intent(RingtoneManager.ACTION_RINGTONE_PICKER).apply {
+                putExtra(RingtoneManager.EXTRA_RINGTONE_TYPE, RingtoneManager.TYPE_NOTIFICATION)
+                putExtra(RingtoneManager.EXTRA_RINGTONE_TITLE, "Select Alert Sound")
+                putExtra(RingtoneManager.EXTRA_RINGTONE_EXISTING_URI, currentUri)
+                putExtra(RingtoneManager.EXTRA_RINGTONE_SHOW_SILENT, false)
+                putExtra(RingtoneManager.EXTRA_RINGTONE_SHOW_DEFAULT, true)
+            }
+            soundPickerLauncher.launch(intent)
+        }
+        findViewById<MaterialButton>(R.id.resetSoundButton).setOnClickListener {
+            prefs.edit().remove("alert_sound_uri").apply()
+            updateAlertSoundName()
+            Toast.makeText(this, "Reset to default beep", Toast.LENGTH_SHORT).show()
+        }
+        findViewById<MaterialButton>(R.id.testSoundButton).setOnClickListener {
+            val uriString = prefs.getString("alert_sound_uri", null)
+            val uri = if (uriString != null) Uri.parse(uriString) else null
+            AlertManager(this).playTestSound(uri)
+        }
+    }
+
+    private val soundPickerLauncher = registerForActivityResult(
+        ActivityResultContracts.StartActivityForResult()
+    ) { result ->
+        if (result.resultCode == RESULT_OK) {
+            val uri = result.data?.getParcelableExtra<Uri>(RingtoneManager.EXTRA_RINGTONE_PICKED_URI)
+            if (uri != null) {
+                prefs.edit().putString("alert_sound_uri", uri.toString()).apply()
+                updateAlertSoundName()
+                Toast.makeText(this, "Alert sound saved", Toast.LENGTH_SHORT).show()
+            }
+        }
+    }
+
+    private fun updateAlertSoundName() {
+        val textView = findViewById<TextView>(R.id.alertSoundName)
+        val uriString = prefs.getString("alert_sound_uri", null)
+        if (uriString != null) {
+            val name = RingtoneManager.getRingtone(this, Uri.parse(uriString))?.getTitle(this)
+            textView.text = name ?: "Custom Sound"
+        } else {
+            textView.text = "Default Beep"
         }
     }
 

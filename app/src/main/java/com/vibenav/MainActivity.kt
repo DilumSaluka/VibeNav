@@ -82,6 +82,7 @@ class MainActivity : AppCompatActivity() {
     private var routePolyline: Polyline? = null
     private var roadDistanceKm: Double = 0.0
     private var roadDurationSec: Int = 0
+    private var savedPlaceMarkers = mutableListOf<Marker>()
 
     private lateinit var searchSuggestions: ListView
     private lateinit var searchAdapter: ArrayAdapter<String>
@@ -231,6 +232,7 @@ class MainActivity : AppCompatActivity() {
         isForeground = true
         mapView.onResume()
         updateThemeButtonIcon()
+        loadSavedPlaceMarkers()
         if (!permissionDialogShownThisSession) {
             permissionDialogShownThisSession = true
             showPermissionChoiceDialog()
@@ -352,6 +354,60 @@ class MainActivity : AppCompatActivity() {
         mapView.controller.setCenter(GeoPoint(6.9271, 79.8612))
 
         fetchWeather(6.9271, 79.8612)
+        loadSavedPlaceMarkers()
+    }
+
+    private fun loadSavedPlaceMarkers() {
+        savedPlaceMarkers.forEach { mapView.overlays.remove(it) }
+        savedPlaceMarkers.clear()
+
+        val places = SavedPlacesManager.getPlaces(this)
+        for (place in places) {
+            val marker = Marker(mapView).apply {
+                position = GeoPoint(place.latitude, place.longitude)
+                setAnchor(Marker.ANCHOR_CENTER, Marker.ANCHOR_BOTTOM)
+                icon = createSavedPlaceIcon()
+                title = place.name
+                snippet = "Tap to navigate here"
+                setOnMarkerClickListener { _, _ ->
+                    placePin(GeoPoint(place.latitude, place.longitude))
+                    mapView.controller.animateTo(GeoPoint(place.latitude, place.longitude), 15.0, 1000L)
+                    true
+                }
+                mapView.overlays.add(this)
+            }
+            savedPlaceMarkers.add(marker)
+        }
+        mapView.invalidate()
+    }
+
+    private fun createSavedPlaceIcon(): android.graphics.drawable.Drawable {
+        val bitmap = android.graphics.Bitmap.createBitmap(40, 40, android.graphics.Bitmap.Config.ARGB_8888)
+        val canvas = android.graphics.Canvas(bitmap)
+
+        val circle = android.graphics.Paint().apply {
+            color = Color.argb(220, 255, 193, 7)
+            isAntiAlias = true
+        }
+        canvas.drawCircle(20f, 20f, 18f, circle)
+
+        val border = android.graphics.Paint().apply {
+            color = Color.argb(255, 255, 160, 0)
+            style = android.graphics.Paint.Style.STROKE
+            strokeWidth = 2f
+            isAntiAlias = true
+        }
+        canvas.drawCircle(20f, 20f, 18f, border)
+
+        val star = android.graphics.Paint().apply {
+            color = Color.WHITE
+            textSize = 20f
+            textAlign = android.graphics.Paint.Align.CENTER
+            isAntiAlias = true
+        }
+        canvas.drawText("★", 20f, 27f, star)
+
+        return android.graphics.drawable.BitmapDrawable(resources, bitmap)
     }
 
     private fun fetchWeather(lat: Double, lon: Double) {

@@ -19,12 +19,13 @@ Get the latest APK from the **[Releases page](https://github.com/DilumSaluka/Vib
 
 | Version | Download |
 |---------|----------|
-| v1.3 | [app-debug.apk](https://github.com/DilumSaluka/VibeNav/releases/download/v1.3/app-debug.apk) (latest) |
-| v1.2 | [app-debug.apk](https://github.com/DilumSaluka/VibeNav/releases/download/v1.2/app-debug.apk) |
-| v1.1 | [app-debug.apk](https://github.com/DilumSaluka/VibeNav/releases/download/v1.1/app-debug.apk) |
-| v1.0 | [app-debug.apk](https://github.com/DilumSaluka/VibeNav/releases/download/v1.0/app-debug.apk) |
+| v1.4 | [app-release.apk](https://github.com/DilumSaluka/VibeNav/releases/download/v1.4/app-release.apk) (latest) |
+| v1.3 | [app-release.apk](https://github.com/DilumSaluka/VibeNav/releases/download/v1.3/app-release.apk) |
+| v1.2 | [app-release.apk](https://github.com/DilumSaluka/VibeNav/releases/download/v1.2/app-release.apk) |
+| v1.1 | [app-release.apk](https://github.com/DilumSaluka/VibeNav/releases/download/v1.1/app-release.apk) |
+| v1.0 | [app-release.apk](https://github.com/DilumSaluka/VibeNav/releases/download/v1.0/app-release.apk) |
 
-> ⚠ Enable **Install from unknown apps** in your phone settings to sideload.
+> The APK is signed with a release keystore — no more debug build warnings on install.
 
 ---
 
@@ -38,7 +39,7 @@ Get the latest APK from the **[Releases page](https://github.com/DilumSaluka/Vib
 | 📍 **My Location** | One-tap center on your current GPS position |
 | 🛰 **Satellite View** | Toggle between street map and satellite imagery |
 | 🎯 **Tracking** | Background GPS service with live distance, speed, and ETA |
-| 🔊 **Arrival Alert** | Full-screen lock-screen alarm with vibration + beep + voice |
+| 🔊 **Arrival Alert** | Full-screen lock-screen alarm with vibration + custom sound + voice |
 | 🗣 **Voice Alerts** | Text-to-speech announces distances and arrival — mute via 🔊/🔇 button on map |
 | ⚙ **Adjustable Radius** | Set alert trigger distance from 50m to 1000m |
 | ⏱ **Auto-Stop** | Tracking stops automatically 60s after arrival |
@@ -49,6 +50,8 @@ Get the latest APK from the **[Releases page](https://github.com/DilumSaluka/Vib
 | 📜 **Trip History** | Auto-saves every trip with distance, route, and timing |
 | 📤 **Share** | Send destination as Google Maps link via any app |
 | 🧭 **Direction Arrow** | Blue circle with rotating arrow pointing toward destination |
+| 🔔 **Custom Alert Sounds** | Pick any notification sound from your phone's ringtone list |
+| 📍 **Saved Place Markers** | Golden ★ pins on the map — tap to navigate |
 | 📖 **Tutorial** | 14-page step-by-step guide on first launch |
 | 📲 **In-App Updates** | Check for new versions and install directly from Settings |
 | 📥 **Offline Maps** | Download map tiles around your area for use without internet |

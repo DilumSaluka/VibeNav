@@ -4,6 +4,18 @@ All notable changes to VibeNav are documented here.
 
 ---
 
+## v1.4 — 🔔 Custom Alert Sounds + 📍 Saved Place Map Markers
+*Released: 2026-07-21*
+
+### New Features
+- 🔔 **Custom Alert Sounds** — Pick any notification sound from your phone's ringtone list in Settings; reset to default beep anytime; Test button to preview
+- 📍 **Saved Place Markers** — All saved places now display as golden ★ pins on the map; tap any pin to navigate there instantly
+- 🔏 **Signed Release Build** — APKs are now signed with a release keystore (no more debug build warnings on install)
+- 🚀 **CI/CD Updated** — GitHub Actions builds signed release APKs using the stored release keystore
+
+---
+
+
 ## v1.3 — 📊 Notification ETA + Live Route Re-fetch + Offline Maps
 *Released: 2026-07-19*
 
